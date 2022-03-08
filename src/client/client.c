@@ -6,7 +6,7 @@
 /*   By: kbiczyk <kbiczyk@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 14:29:34 by kamilbiczyk       #+#    #+#             */
-/*   Updated: 2022/03/08 15:34:36 by kbiczyk          ###   ########.fr       */
+/*   Updated: 2022/03/08 15:47:30 by kbiczyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,15 @@ void    send_message(int pid, char *message)
         shift = -1;
         while (++shift < 8)
         {
-            if (((int) *message >> shift) & 1)
-                kill(pid, SIGUSR2);
-            else
-                kill(pid, SIGUSR2);
+            if (((int) *message >> shift) & 1) {
+                if(kill(pid, SIGUSR2) == -1)
+                    error("wrong PID");
+            }
+            else {
+                if(kill(pid, SIGUSR1) == -1)
+                    error("wrong PID");
+            }
+            usleep(300);
         }
         message++;
     }
