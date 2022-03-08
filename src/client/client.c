@@ -6,7 +6,7 @@
 /*   By: kbiczyk <kbiczyk@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 14:29:34 by kamilbiczyk       #+#    #+#             */
-/*   Updated: 2022/03/08 13:05:30 by kbiczyk          ###   ########.fr       */
+/*   Updated: 2022/03/08 15:34:36 by kbiczyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,22 @@ void error(char *s)
     exit(EXIT_FAILURE);
 }
 
-char *format_number(int c)
-{
-    return (0);
-}
-
 void    send_message(int pid, char *message)
 {
-    int i;
+    int shift;
  
-    i = 0;
-    while (message[i] != '\0')
+    while (*message != '\0')
     {
-        printf("%d\n", message[i]);
-        i++;
+        shift = -1;
+        while (++shift < 8)
+        {
+            if (((int) *message >> shift) & 1)
+                kill(pid, SIGUSR2);
+            else
+                kill(pid, SIGUSR2);
+        }
+        message++;
     }
-    
-    printf("PID : %d", pid);
-    printf("\nMESSAGE : %s car : %d", message, *message);
-
-    
 }
 
 int main(int argc, char **argv)
